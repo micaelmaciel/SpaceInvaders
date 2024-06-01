@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1v8hktx8c0o2"]
+
+[ext_resource type="Script" path="res://Scripts/Components/AutoMove.cs" id="1_0v0dy"]
+
+[node name="AutoMove" type="Node"]
+script = ExtResource("1_0v0dy")

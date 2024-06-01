@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://cw04vkjsvwekh"]
+
+[ext_resource type="Texture2D" uid="uid://ox0yebvisj3h" path="res://Assets/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health.png" id="1_k67ri"]
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_vrdq3"]
+[ext_resource type="PackedScene" uid="uid://d05gn1f68d4fh" path="res://Scenes/Components/bullet_spawner.tscn" id="3_umg6t"]
+[ext_resource type="PackedScene" uid="uid://b0yvsvhni48tv" path="res://Scenes/BulletSpawnPoint.tscn" id="4_bol3v"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dgqhr"]
+height = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_07bk2"]
+height = 24.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(231, 169)
+script = ExtResource("1_vrdq3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_dgqhr")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_k67ri")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_07bk2")
+
+[node name="BulletSpawner" parent="." node_paths=PackedStringArray("BulletSpawnPoints") instance=ExtResource("3_umg6t")]
+BulletSpawnPoints = [NodePath("BulletSpawnPoint")]
+
+[node name="BulletSpawnPoint" parent="BulletSpawner" instance=ExtResource("4_bol3v")]
+position = Vector2(0, -12)
+Direction = Vector2(0, -1)
+Speed = 100.0

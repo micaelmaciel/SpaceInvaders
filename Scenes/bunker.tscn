@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://dm7sgkt4hldm8"]
+
+[ext_resource type="Texture2D" uid="uid://cnipln28e31r0" path="res://Assets/Bunker 1-1.png" id="1_u2qn6"]
+[ext_resource type="PackedScene" uid="uid://d01m00mqipyax" path="res://Scenes/Components/damage_handler.tscn" id="2_p3d01"]
+[ext_resource type="Script" path="res://Scripts/Resources/DamageableStats.cs" id="3_bkdfe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3g2n3"]
+size = Vector2(20, 22)
+
+[sub_resource type="Resource" id="Resource_672cd"]
+script = ExtResource("3_bkdfe")
+StartingHealth = 30.0
+Defense = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apnox"]
+size = Vector2(18, 21)
+
+[node name="Bunker" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_u2qn6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_3g2n3")
+
+[node name="DamageHandler" parent="." node_paths=PackedStringArray("VisibleObject", "CollisionReactor") instance=ExtResource("2_p3d01")]
+collision_layer = 8
+collision_mask = 2
+VisibleObject = NodePath("../Sprite2D")
+CollisionReactor = NodePath("..")
+DamageStats = SubResource("Resource_672cd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHandler"]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_apnox")

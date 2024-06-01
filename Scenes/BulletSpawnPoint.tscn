@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0yvsvhni48tv"]
+
+[ext_resource type="Script" path="res://Scripts/Components/BulletSpawnPoint.cs" id="1_pjk6c"]
+
+[node name="BulletSpawnPoint" type="Marker2D"]
+script = ExtResource("1_pjk6c")

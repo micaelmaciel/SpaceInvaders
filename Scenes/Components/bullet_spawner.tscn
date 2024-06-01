@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d05gn1f68d4fh"]
+
+[ext_resource type="Script" path="res://Scripts/Components/BulletSpawner.cs" id="1_f7ywn"]
+
+[node name="BulletSpawner" type="Node2D" node_paths=PackedStringArray("BulletSpawnPoints")]
+script = ExtResource("1_f7ywn")
+BulletSpawnPoints = []
