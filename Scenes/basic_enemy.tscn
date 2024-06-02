@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://bt7xqwrqx17dv"]
+
+[ext_resource type="Texture2D" uid="uid://tusn34q4es5c" path="res://Assets/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Base Engine.png" id="1_coscf"]
+[ext_resource type="PackedScene" uid="uid://d1v8hktx8c0o2" path="res://Scenes/Components/auto_move.tscn" id="2_xm784"]
+[ext_resource type="PackedScene" uid="uid://d01m00mqipyax" path="res://Scenes/Components/damage_handler.tscn" id="3_iqugp"]
+[ext_resource type="Script" path="res://Scripts/Resources/DamageableStats.cs" id="4_xhqu4"]
+
+[sub_resource type="Resource" id="Resource_pwcpg"]
+script = ExtResource("4_xhqu4")
+StartingHealth = 9999.0
+Defense = 0.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_svh23"]
+radius = 9.0
+height = 18.0
+
+[node name="BasicEnemy" type="CharacterBody2D" groups=["PendularEnemy"]]
+position = Vector2(229, 133)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_coscf")
+
+[node name="AutoMove" parent="." node_paths=PackedStringArray("MovingObject", "CollisionNotificator") instance=ExtResource("2_xm784")]
+MovingObject = NodePath("..")
+CollisionNotificator = NodePath("../DamageHandler")
+HasPendularMovement = true
+
+[node name="DamageHandler" parent="." node_paths=PackedStringArray("VisibleObject", "CollisionReactor") instance=ExtResource("3_iqugp")]
+collision_layer = 4
+collision_mask = 8
+VisibleObject = NodePath("../Sprite2D")
+CollisionReactor = NodePath("..")
+DamageStats = SubResource("Resource_pwcpg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHandler"]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_svh23")

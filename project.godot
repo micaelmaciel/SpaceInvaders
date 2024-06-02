@@ -12,7 +12,7 @@ config_version=5
 
 ClassPrefix=""
 SearchType=0
-ResourceScriptDirectories=["res://"]
+ResourceScriptDirectories=["res://Scripts/Resources/"]
 
 [application]
 

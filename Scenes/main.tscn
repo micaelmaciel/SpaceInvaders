@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6p602b8ly0l0"]
+[gd_scene load_steps=4 format=3 uid="uid://c6p602b8ly0l0"]
 
 [ext_resource type="PackedScene" uid="uid://cw04vkjsvwekh" path="res://Scenes/player.tscn" id="1_iquru"]
 [ext_resource type="PackedScene" uid="uid://dm7sgkt4hldm8" path="res://Scenes/bunker.tscn" id="2_iw6hv"]
+[ext_resource type="PackedScene" uid="uid://bt7xqwrqx17dv" path="res://Scenes/basic_enemy.tscn" id="3_v56a5"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(24, 8)
@@ -10,7 +11,7 @@ position = Vector2(24, 8)
 position = Vector2(231, 234)
 
 [node name="Bunker" parent="." instance=ExtResource("2_iw6hv")]
-position = Vector2(86, 176)
+position = Vector2(76, 70)
 scale = Vector2(4.2501, 2.68058)
 
 [node name="Bunker2" parent="." instance=ExtResource("2_iw6hv")]
@@ -18,5 +19,8 @@ position = Vector2(224, 176)
 scale = Vector2(4.2501, 2.68058)
 
 [node name="Bunker3" parent="." instance=ExtResource("2_iw6hv")]
-position = Vector2(356, 176)
+position = Vector2(360, 70)
 scale = Vector2(4.2501, 2.68058)
+
+[node name="BasicEnemy" parent="." instance=ExtResource("3_v56a5")]
+position = Vector2(228, 71)

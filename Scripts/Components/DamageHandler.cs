@@ -23,8 +23,6 @@ public partial class DamageHandler : Area2D
     {
         base._Ready();
         CurrentHealth = DamageStats.StartingHealth;
-
-        AreaEntered += _on_area_entered;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -64,13 +62,5 @@ public partial class DamageHandler : Area2D
     public void DestroyedInternal()
     {
         CollisionReactor.QueueFree();
-    }
-
-
-    private void _on_area_entered(Area2D area)
-    {
-        GD.Print("Entered: " + area.Name);
-        TakeDamage(20);
-        GD.Print("Health left: " + CurrentHealth);
     }
 }
