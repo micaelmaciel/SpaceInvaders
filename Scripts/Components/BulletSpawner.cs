@@ -26,9 +26,12 @@ public partial class BulletSpawner : Node2D
     public void Fire()
     {
         foreach (BulletSpawnPoint point in BulletSpawnPoints) {
+            float angle = (float) Math.Atan2(point.Direction.Y, point.Direction.X) + (float) Math.PI/2;
+            GD.Print(angle);
             Bullet BulletInstance = (Bullet) BulletInstances[point.Bullet].Instantiate();
             GetTree().Root.AddChild((Node) BulletInstance);
             BulletInstance.SetMotion(point.GlobalPosition, point.Direction, point.Speed);
+            BulletInstance.SetRotation(angle);
         }
     }
 }

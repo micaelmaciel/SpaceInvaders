@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bd41g6xmyjgrm" path="res://Assets/Main ship weapons/PNGs/Main ship weapon - Projectile - Auto cannon bullet.png" id="1_6wupd"]
 [ext_resource type="Script" path="res://Scripts/BasicBullet.cs" id="1_r6onm"]
 [ext_resource type="PackedScene" uid="uid://d1v8hktx8c0o2" path="res://Scenes/Components/auto_move.tscn" id="3_2wwcu"]
-[ext_resource type="PackedScene" uid="uid://d01m00mqipyax" path="res://Scenes/Components/damage_handler.tscn" id="4_qkt0s"]
+[ext_resource type="PackedScene" uid="uid://deel2qe7hidl8" path="res://Scenes/Components/HitboxComponent.tscn" id="5_l660o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sddln"]
 atlas = ExtResource("1_6wupd")
@@ -46,25 +46,28 @@ radius = 3.0
 height = 8.0
 
 [node name="BasicBullet" type="AnimatableBody2D"]
+collision_layer = 2
+collision_mask = 5
 sync_to_physics = false
 script = ExtResource("1_r6onm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_gv2pw")
 autoplay = "default"
 frame = 1
 frame_progress = 0.402187
 
 [node name="AutoMove" parent="." node_paths=PackedStringArray("MovingObject") instance=ExtResource("3_2wwcu")]
+MovingObject = NodePath("..")
 Speed = 10.0
 Direction = Vector2(0, -1)
-MovingObject = NodePath("..")
 
-[node name="DamageHandler" parent="." instance=ExtResource("4_qkt0s")]
+[node name="HitboxComponent" parent="." instance=ExtResource("5_l660o")]
 collision_layer = 2
-collision_mask = 12
-HasDamageOverride = true
-HasDestroyedOverride = true
+collision_mask = 13
+Damage = 20.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHandler"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -4)
 shape = SubResource("CapsuleShape2D_ms7ud")

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class DamageHandler : Area2D
+public partial class HurtboxComponent : Area2D
 {
     [Signal]
     public delegate void HitTakenEventHandler(float Damage);

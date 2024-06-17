@@ -16,6 +16,8 @@ public partial class HitboxComponent : Area2D
 
     public void HandleCollision(Area2D Area)
     {
-        if (Area is DamageHandler Hurtbox) Hurtbox.TakeDamage(Damage);
+        if (Area is HurtboxComponent Hurtbox) {
+            Hurtbox.TakeDamage(Damage);
+        }
     }
 }

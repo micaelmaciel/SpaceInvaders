@@ -1,17 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6p602b8ly0l0"]
+[gd_scene load_steps=7 format=3 uid="uid://c6p602b8ly0l0"]
 
+[ext_resource type="Script" path="res://Scripts/Main.cs" id="1_chh2t"]
 [ext_resource type="PackedScene" uid="uid://cw04vkjsvwekh" path="res://Scenes/player.tscn" id="1_iquru"]
 [ext_resource type="PackedScene" uid="uid://dm7sgkt4hldm8" path="res://Scenes/bunker.tscn" id="2_iw6hv"]
 [ext_resource type="PackedScene" uid="uid://bt7xqwrqx17dv" path="res://Scenes/basic_enemy.tscn" id="3_v56a5"]
+[ext_resource type="PackedScene" uid="uid://coknqw50brets" path="res://Scenes/Components/GridSpawner.tscn" id="4_wubx2"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_x88rj"]
+b = Vector2(0, 270)
 
 [node name="Main" type="Node2D"]
-position = Vector2(24, 8)
+script = ExtResource("1_chh2t")
 
 [node name="Player" parent="." instance=ExtResource("1_iquru")]
 position = Vector2(231, 234)
 
 [node name="Bunker" parent="." instance=ExtResource("2_iw6hv")]
-position = Vector2(76, 70)
+position = Vector2(115, 178)
 scale = Vector2(4.2501, 2.68058)
 
 [node name="Bunker2" parent="." instance=ExtResource("2_iw6hv")]
@@ -19,8 +24,36 @@ position = Vector2(224, 176)
 scale = Vector2(4.2501, 2.68058)
 
 [node name="Bunker3" parent="." instance=ExtResource("2_iw6hv")]
-position = Vector2(360, 70)
+position = Vector2(360, 177)
 scale = Vector2(4.2501, 2.68058)
 
-[node name="BasicEnemy" parent="." instance=ExtResource("3_v56a5")]
-position = Vector2(228, 71)
+[node name="Walls" type="Node" parent="."]
+
+[node name="Wall1" type="StaticBody2D" parent="Walls"]
+collision_layer = 16
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall1"]
+shape = SubResource("SegmentShape2D_x88rj")
+metadata/_edit_lock_ = true
+
+[node name="Wall2" type="StaticBody2D" parent="Walls"]
+position = Vector2(480, 0)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
+shape = SubResource("SegmentShape2D_x88rj")
+metadata/_edit_lock_ = true
+
+[node name="BasicEnemyFireRate" type="Timer" parent="."]
+autostart = true
+
+[node name="GridSpawner" parent="." instance=ExtResource("4_wubx2")]
+position = Vector2(156, 21)
+columns = 4
+rows = 4
+hSeparation = 10
+vSeparation = 14
+scene = ExtResource("3_v56a5")

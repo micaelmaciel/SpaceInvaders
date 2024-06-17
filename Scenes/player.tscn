@@ -1,18 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://cw04vkjsvwekh"]
+[gd_scene load_steps=10 format=3 uid="uid://cw04vkjsvwekh"]
 
 [ext_resource type="Texture2D" uid="uid://ox0yebvisj3h" path="res://Assets/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health.png" id="1_k67ri"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_vrdq3"]
 [ext_resource type="PackedScene" uid="uid://d05gn1f68d4fh" path="res://Scenes/Components/bullet_spawner.tscn" id="3_umg6t"]
 [ext_resource type="PackedScene" uid="uid://b0yvsvhni48tv" path="res://Scenes/BulletSpawnPoint.tscn" id="4_bol3v"]
+[ext_resource type="PackedScene" uid="uid://d01m00mqipyax" path="res://Scenes/Components/hurtbox_component.tscn" id="5_7eccw"]
+[ext_resource type="Script" path="res://Scripts/Resources/DamageableStats.cs" id="6_7df6c"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dgqhr"]
 height = 26.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_07bk2"]
-height = 24.0
+[sub_resource type="Resource" id="Resource_fh5x5"]
+script = ExtResource("6_7df6c")
+StartingHealth = 100.0
+Defense = 0.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mc4gw"]
+radius = 5.0
+height = 20.0
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(231, 169)
+motion_mode = 1
 script = ExtResource("1_vrdq3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -25,16 +33,18 @@ texture = ExtResource("1_k67ri")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[node name="Hitbox" type="Area2D" parent="."]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CapsuleShape2D_07bk2")
-
 [node name="BulletSpawner" parent="." node_paths=PackedStringArray("BulletSpawnPoints") instance=ExtResource("3_umg6t")]
 BulletSpawnPoints = [NodePath("BulletSpawnPoint")]
 
 [node name="BulletSpawnPoint" parent="BulletSpawner" instance=ExtResource("4_bol3v")]
-position = Vector2(0, -12)
+position = Vector2(0, -13)
 Direction = Vector2(0, -1)
 Speed = 100.0
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("VisibleObject", "CollisionReactor") instance=ExtResource("5_7eccw")]
+VisibleObject = NodePath("../Sprite2D")
+CollisionReactor = NodePath("..")
+DamageStats = SubResource("Resource_fh5x5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+shape = SubResource("CapsuleShape2D_mc4gw")

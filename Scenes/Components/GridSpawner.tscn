@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://coknqw50brets"]
+
+[ext_resource type="Script" path="res://Scripts/Components/GridSpawner.gd" id="1_s7e33"]
+
+[node name="GridSpawner" type="Node2D"]
+script = ExtResource("1_s7e33")

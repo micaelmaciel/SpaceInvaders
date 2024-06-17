@@ -1,13 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://bt7xqwrqx17dv"]
+[gd_scene load_steps=10 format=3 uid="uid://bt7xqwrqx17dv"]
 
 [ext_resource type="Texture2D" uid="uid://tusn34q4es5c" path="res://Assets/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Base Engine.png" id="1_coscf"]
-[ext_resource type="PackedScene" uid="uid://d1v8hktx8c0o2" path="res://Scenes/Components/auto_move.tscn" id="2_xm784"]
-[ext_resource type="PackedScene" uid="uid://d01m00mqipyax" path="res://Scenes/Components/damage_handler.tscn" id="3_iqugp"]
+[ext_resource type="Script" path="res://Scripts/BasicEnemy.cs" id="1_nc2ls"]
+[ext_resource type="PackedScene" uid="uid://d01m00mqipyax" path="res://Scenes/Components/hurtbox_component.tscn" id="3_iqugp"]
 [ext_resource type="Script" path="res://Scripts/Resources/DamageableStats.cs" id="4_xhqu4"]
+[ext_resource type="PackedScene" uid="uid://d05gn1f68d4fh" path="res://Scenes/Components/bullet_spawner.tscn" id="5_cuo8h"]
+[ext_resource type="PackedScene" uid="uid://b0yvsvhni48tv" path="res://Scenes/BulletSpawnPoint.tscn" id="6_jbhpy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4lvqf"]
+size = Vector2(20, 15)
 
 [sub_resource type="Resource" id="Resource_pwcpg"]
 script = ExtResource("4_xhqu4")
-StartingHealth = 9999.0
+StartingHealth = 50.0
 Defense = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_svh23"]
@@ -15,23 +20,45 @@ radius = 9.0
 height = 18.0
 
 [node name="BasicEnemy" type="CharacterBody2D" groups=["PendularEnemy"]]
-position = Vector2(229, 133)
+collision_layer = 4
+collision_mask = 16
+motion_mode = 1
+script = ExtResource("1_nc2ls")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_4lvqf")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_coscf")
+metadata/_edit_lock_ = true
 
-[node name="AutoMove" parent="." node_paths=PackedStringArray("MovingObject", "CollisionNotificator") instance=ExtResource("2_xm784")]
-MovingObject = NodePath("..")
-CollisionNotificator = NodePath("../DamageHandler")
-HasPendularMovement = true
-
-[node name="DamageHandler" parent="." node_paths=PackedStringArray("VisibleObject", "CollisionReactor") instance=ExtResource("3_iqugp")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("VisibleObject", "CollisionReactor") instance=ExtResource("3_iqugp")]
+visible = false
 collision_layer = 4
-collision_mask = 8
+collision_mask = 2
 VisibleObject = NodePath("../Sprite2D")
 CollisionReactor = NodePath("..")
 DamageStats = SubResource("Resource_pwcpg")
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHandler"]
-position = Vector2(0, 4)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_svh23")
+
+[node name="BulletSpawner" parent="." node_paths=PackedStringArray("BulletSpawnPoints") instance=ExtResource("5_cuo8h")]
+BulletSpawnPoints = [NodePath("BulletSpawnPoint")]
+metadata/_edit_lock_ = true
+
+[node name="BulletSpawnPoint" parent="BulletSpawner" instance=ExtResource("6_jbhpy")]
+position = Vector2(0, 11)
+Direction = Vector2(0, 1)
+Speed = 40.0
+
+[node name="BottomRay" type="RayCast2D" parent="."]
+target_position = Vector2(0, 30)
+collision_mask = 4
+hit_from_inside = true
+metadata/_edit_lock_ = true
