@@ -1,2 +1,2 @@
 # SpaceInvaders
-Third game from 20 Games Chanllenge.
+Space invaders made with composition in c# in Godot 4.
