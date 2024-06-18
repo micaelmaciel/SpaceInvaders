@@ -1,2 +1,2 @@
 # SpaceInvaders
-Space invaders made with composition in c# in Godot 4.
+Space invaders made with composition in c# in Godot 4
